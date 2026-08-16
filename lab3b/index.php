@@ -73,6 +73,7 @@
             font-size: 24px;
         }
         .upload-icon.pdf { background: #fef2f2; color: #dc2626; }
+        .upload-icon.audio { background: #f0fdf4; color: #16a34a; }
         .file-input-wrapper {
             position: relative;
             display: inline-block;
@@ -167,6 +168,24 @@
                                     </div>
                                 </div>
                                 <div id="pdf-name" class="file-name-display"></div>
+                            </div>
+                        </div>
+
+                        <div class="column is-6">
+                            <div class="upload-card">
+                                <div class="upload-icon audio">
+                                    <i class="fas fa-music"></i>
+                                </div>
+                                <h3 class="title is-5 mb-3">Audio Files</h3>
+                                <p class="is-size-7 has-text-grey mb-4">Upload MP3 audio files</p>
+                                <div class="file-input-wrapper">
+                                    <input type="file" name="uploaded_files[]" accept=".mp3,audio/mpeg,audio/mp3" onchange="updateFileName(this, 'audio-name')" />
+                                    <div class="file-input-btn">
+                                        <i class="fas fa-folder-open"></i>
+                                        <span>Choose MP3 File</span>
+                                    </div>
+                                </div>
+                                <div id="audio-name" class="file-name-display"></div>
                             </div>
                         </div>
                     </div>

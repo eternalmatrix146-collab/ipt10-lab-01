@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fileError = $files['error'][$i];
             $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             
-            $allowedTypes = ['application/pdf'];
-            $allowedExtensions = ['pdf'];
+            $allowedTypes = ['application/pdf', 'audio/mpeg', 'audio/mp3'];
+            $allowedExtensions = ['pdf', 'mp3'];
             $maxFileSize = 50 * 1024 * 1024;
             
             if ($fileError !== UPLOAD_ERR_OK) {
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             if (!in_array($fileExt, $allowedExtensions)) {
-                $messages[] = ['type' => 'danger', 'text' => "Invalid file type for '$fileName'. Only PDF files are allowed in this branch."];
+                $messages[] = ['type' => 'danger', 'text' => "Invalid file type for '$fileName'. Only PDF and MP3 files are allowed."];
                 continue;
             }
             
@@ -45,6 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             if (move_uploaded_file($fileTmp, $destination)) {
                 $mimeType = mime_content_type($destination);
+                $fileCategory = 'pdf';
+                if (in_array($mimeType, ['audio/mpeg', 'audio/mp3'])) {
+                    $fileCategory = 'audio';
+                }
                 $uploadedFiles[] = [
                     'name' => $fileName,
                     'path' => $relativePath . $newFileName,
@@ -188,6 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: all 0.2s ease;
         }
         .download-btn.pdf { background: #fef2f2; color: #dc2626; }
+        .download-btn.audio { background: #f0fdf4; color: #16a34a; }
         .download-btn:hover { transform: translateY(-1px); }
         .button {
             border-radius: 12px;
@@ -256,20 +261,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="file-card">
                             <div class="file-header">
                                 <div class="file-icon <?php echo $file['category']; ?>">
-                                    <i class="fas fa-file-pdf"></i>
+                                    <i class="fas fa-<?php echo $file['category'] === 'pdf' ? 'file-pdf' : 'music'; ?>"></i>
                                 </div>
                                 <div class="file-info">
                                     <h4><?php echo htmlspecialchars($file['name']); ?></h4>
-                                    <p>PDF Document &bull; <?php echo round($file['size'] / 1024, 2); ?> KB</p>
+                                    <p><?php echo $file['category'] === 'pdf' ? 'PDF Document' : 'Audio File'; ?> &bull; <?php echo round($file['size'] / 1024, 2); ?> KB</p>
                                 </div>
                             </div>
 
                             <div class="preview-container">
-                                <embed src="<?php echo htmlspecialchars($file['path']); ?>" type="application/pdf" />
+                                <?php if ($file['category'] === 'pdf'): ?>
+                                    <embed src="<?php echo htmlspecialchars($file['path']); ?>" type="application/pdf" />
+                                <?php elseif ($file['category'] === 'audio'): ?>
+                                    <audio controls>
+                                        <source src="<?php echo htmlspecialchars($file['path']); ?>" type="<?php echo htmlspecialchars($file['mime']); ?>">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                <?php endif; ?>
                             </div>
 
                             <div class="has-text-centered">
-                                <a href="<?php echo htmlspecialchars($file['path']); ?>" download class="download-btn pdf">
+                                <a href="<?php echo htmlspecialchars($file['path']); ?>" download class="download-btn <?php echo $file['category']; ?>">
                                     <i class="fas fa-download"></i>
                                     <span>Download</span>
                                 </a>
