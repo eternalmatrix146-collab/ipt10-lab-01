@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $fileError = $files['error'][$i];
             $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             
-            $allowedTypes = ['application/pdf', 'audio/mpeg', 'audio/mp3'];
-            $allowedExtensions = ['pdf', 'mp3'];
+            $allowedTypes = ['application/pdf', 'audio/mpeg', 'audio/mp3', 'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+            $allowedExtensions = ['pdf', 'mp3', 'jpeg', 'jpg', 'png', 'gif', 'webp', 'svg'];
             $maxFileSize = 50 * 1024 * 1024;
             
             if ($fileError !== UPLOAD_ERR_OK) {
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             if (!in_array($fileExt, $allowedExtensions)) {
-                $messages[] = ['type' => 'danger', 'text' => "Invalid file type for '$fileName'. Only PDF and MP3 files are allowed."];
+                $messages[] = ['type' => 'danger', 'text' => "Invalid file type for '$fileName'. Only PDF, MP3, and image files are allowed."];
                 continue;
             }
             
@@ -48,11 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $fileCategory = 'pdf';
                 if (in_array($mimeType, ['audio/mpeg', 'audio/mp3'])) {
                     $fileCategory = 'audio';
+                } elseif (in_array($mimeType, ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'])) {
+                    $fileCategory = 'image';
                 }
                 $uploadedFiles[] = [
                     'name' => $fileName,
                     'path' => $relativePath . $newFileName,
-                    'category' => 'pdf',
+                    'category' => $fileCategory,
                     'size' => $fileSize,
                     'mime' => $mimeType
                 ];
@@ -193,6 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         .download-btn.pdf { background: #fef2f2; color: #dc2626; }
         .download-btn.audio { background: #f0fdf4; color: #16a34a; }
+        .download-btn.image { background: #eff6ff; color: #2563eb; }
         .download-btn:hover { transform: translateY(-1px); }
         .button {
             border-radius: 12px;
@@ -261,11 +264,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="file-card">
                             <div class="file-header">
                                 <div class="file-icon <?php echo $file['category']; ?>">
-                                    <i class="fas fa-<?php echo $file['category'] === 'pdf' ? 'file-pdf' : 'music'; ?>"></i>
+                                    <i class="fas fa-<?php echo $file['category'] === 'pdf' ? 'file-pdf' : ($file['category'] === 'audio' ? 'music' : 'image'); ?>"></i>
                                 </div>
                                 <div class="file-info">
                                     <h4><?php echo htmlspecialchars($file['name']); ?></h4>
-                                    <p><?php echo $file['category'] === 'pdf' ? 'PDF Document' : 'Audio File'; ?> &bull; <?php echo round($file['size'] / 1024, 2); ?> KB</p>
+                                    <p><?php echo ucfirst($file['category']); ?> File &bull; <?php echo round($file['size'] / 1024, 2); ?> KB</p>
                                 </div>
                             </div>
 
@@ -277,6 +280,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <source src="<?php echo htmlspecialchars($file['path']); ?>" type="<?php echo htmlspecialchars($file['mime']); ?>">
                                         Your browser does not support the audio element.
                                     </audio>
+                                <?php elseif ($file['category'] === 'image'): ?>
+                                    <img src="<?php echo htmlspecialchars($file['path']); ?>" alt="<?php echo htmlspecialchars($file['name']); ?>" />
                                 <?php endif; ?>
                             </div>
 

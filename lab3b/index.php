@@ -74,6 +74,7 @@
         }
         .upload-icon.pdf { background: #fef2f2; color: #dc2626; }
         .upload-icon.audio { background: #f0fdf4; color: #16a34a; }
+        .upload-icon.image { background: #eff6ff; color: #2563eb; }
         .file-input-wrapper {
             position: relative;
             display: inline-block;
@@ -187,8 +188,26 @@
                                 </div>
                                 <div id="audio-name" class="file-name-display"></div>
                             </div>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="column is-6">
+                            <div class="upload-card">
+                                <div class="upload-icon image">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <h3 class="title is-5 mb-3">Image Files</h3>
+                                <p class="is-size-7 has-text-grey mb-4">Upload JPG, PNG, GIF, WebP, SVG</p>
+                                <div class="file-input-wrapper">
+                                    <input type="file" name="uploaded_files[]" accept="image/*" onchange="updateFileName(this, 'image-name')" />
+                                    <div class="file-input-btn">
+                                        <i class="fas fa-folder-open"></i>
+                                        <span>Choose Image File</span>
+                                    </div>
+                                </div>
+                                <div id="image-name" class="file-name-display"></div>
+                            </div>
+                        </div>
 
                     <div class="has-text-centered mt-6">
                         <button type="submit" class="button is-link is-medium">
