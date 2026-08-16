@@ -75,6 +75,7 @@
         .upload-icon.pdf { background: #fef2f2; color: #dc2626; }
         .upload-icon.audio { background: #f0fdf4; color: #16a34a; }
         .upload-icon.image { background: #eff6ff; color: #2563eb; }
+        .upload-icon.video { background: #fefce8; color: #ca8a04; }
         .file-input-wrapper {
             position: relative;
             display: inline-block;
@@ -188,7 +189,6 @@
                                 </div>
                                 <div id="audio-name" class="file-name-display"></div>
                             </div>
-                            </div>
                         </div>
 
                         <div class="column is-6">
@@ -206,6 +206,24 @@
                                     </div>
                                 </div>
                                 <div id="image-name" class="file-name-display"></div>
+                            </div>
+                        </div>
+
+                        <div class="column is-6">
+                            <div class="upload-card">
+                                <div class="upload-icon video">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <h3 class="title is-5 mb-3">Video Files</h3>
+                                <p class="is-size-7 has-text-grey mb-4">Upload MP4 video files</p>
+                                <div class="file-input-wrapper">
+                                    <input type="file" name="uploaded_files[]" accept=".mp4,video/mp4" onchange="updateFileName(this, 'video-name')" />
+                                    <div class="file-input-btn">
+                                        <i class="fas fa-folder-open"></i>
+                                        <span>Choose MP4 File</span>
+                                    </div>
+                                </div>
+                                <div id="video-name" class="file-name-display"></div>
                             </div>
                         </div>
 
