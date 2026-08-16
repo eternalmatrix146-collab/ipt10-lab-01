@@ -48,6 +48,71 @@
         .icon-circle i { color: white; font-size: 32px; }
         .title { color: #111827; font-weight: 800; letter-spacing: -0.02em; }
         .subtitle { color: #6b7280; font-weight: 500; }
+        .upload-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border: 2px dashed #e5e7eb;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .upload-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+        }
+        .upload-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            font-size: 24px;
+        }
+        .upload-icon.pdf { background: #fef2f2; color: #dc2626; }
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-input-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #374151;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .file-input-wrapper:hover .file-input-btn {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .file-name-display {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
+            min-height: 20px;
+        }
         .button {
             border-radius: 12px;
             font-weight: 600;
@@ -86,14 +151,30 @@
 
             <div class="panel-body">
                 <form method="POST" action="uploaded.php" enctype="multipart/form-data" novalidate>
-                    <div id="upload-zones">
-                        <p class="has-text-centered mt-6">Upload functionality will be added in branches.</p>
+                    <div class="columns is-multiline">
+                        <div class="column is-6">
+                            <div class="upload-card">
+                                <div class="upload-icon pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                </div>
+                                <h3 class="title is-5 mb-3">PDF Documents</h3>
+                                <p class="is-size-7 has-text-grey mb-4">Upload PDF files only</p>
+                                <div class="file-input-wrapper">
+                                    <input type="file" name="uploaded_files[]" accept=".pdf,application/pdf" onchange="updateFileName(this, 'pdf-name')" />
+                                    <div class="file-input-btn">
+                                        <i class="fas fa-folder-open"></i>
+                                        <span>Choose PDF File</span>
+                                    </div>
+                                </div>
+                                <div id="pdf-name" class="file-name-display"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="has-text-centered mt-6">
                         <button type="submit" class="button is-link is-medium">
                             <i class="fas fa-upload"></i>
-                            <span>Upload Files</span>
+                            <span>Upload All Files</span>
                         </button>
                         <a href="uploaded.php" class="button is-medium ml-3" style="background: #f3f4f6; color: #374151;">
                             <i class="fas fa-eye"></i>
@@ -104,5 +185,19 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function updateFileName(input, displayId) {
+            const display = document.getElementById(displayId);
+            if (display) {
+                if (input.files && input.files.length > 0) {
+                    display.textContent = 'Selected: ' + input.files[0].name;
+                    display.style.color = '#111827';
+                } else {
+                    display.textContent = '';
+                }
+            }
+        }
+    </script>
 </body>
 </html>
