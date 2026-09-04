@@ -10,18 +10,14 @@ class TextFileExporter implements FileExporter
         $lines = array();
 
         foreach ($records as $record) {
-            // TODO 4: Add one readable line to $lines.
-            // Format : ID | Service | Status
-            $lines[] = ______________________________;
+            $lines[] = $record['id'] . ' | ' . $record['service'] . ' | ' . $record['status'];
         }
 
-        // TODO 5: Join the lines using PHP_EOL.
-        return ______________________________;
+        return implode(PHP_EOL, $lines);
     }
 
     public function getExtension()
     {
-        // TODO 6: Return the text-file extension.
-        return __________;
+        return 'txt';
     }
 }
