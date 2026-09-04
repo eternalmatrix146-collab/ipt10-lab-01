@@ -1,0 +1,11 @@
+{
+    "name": "ipt10/fileflow-pattern-lab",
+    "description": "Singleton and Factory Method laboratory",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}
