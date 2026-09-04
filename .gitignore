@@ -2,3 +2,4 @@
 /output/*.txt
 /output/*.json
 .DS_Store
+composer.phar

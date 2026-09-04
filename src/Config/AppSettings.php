@@ -15,14 +15,11 @@ class AppSettings
 
     public static function getInstance()
     {
-        // TODO 1: Check whether the instance is still null.
-        if (_______________________________) {
-            // TODO 2: Create and store one AppSettings object.
-            ________________________________;
+        if (self::$instance === null) {
+            self::$instance = new AppSettings();
         }
 
-        // TODO 3: Return the stored object.
-        return ____________________________;
+        return self::$instance;
     }
 
     public function getApplicationName()
