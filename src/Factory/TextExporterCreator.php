@@ -7,7 +7,6 @@ class TextExporterCreator extends ExporterCreator
 {
     public function createExporter()
     {
-        // TODO 10: Return the correct exporter object.
-        return new ____________________();
+        return new TextFileExporter();
     }
 }

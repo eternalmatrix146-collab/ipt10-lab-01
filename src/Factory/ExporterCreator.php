@@ -17,11 +17,9 @@ abstract class ExporterCreator
             mkdir($directory, 0777, true);
         }
 
-        $path = $directory . '/' . $baseName . '.'
-            . $exporter->getExtension();
+        $path = $directory . '/' . $baseName . '.' . $exporter->getExtension();
 
-        // TODO 9: Export the records and save them to $path.
-        file_put_contents($path, ___________________________);
+        file_put_contents($path, $exporter->export($records));
 
         return $path;
     }
