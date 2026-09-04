@@ -25,5 +25,5 @@ The first command generates `output/daily_report.txt` and the second generates `
 
 ## Developers
 
-Student 1: [Your Name]
-Student 2: [Partner Name]
+Student 1: James Andrei Sarno
+
