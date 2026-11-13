@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{site_title}}</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="/" class="site-logo">Nested Forum</a>
+            <nav class="nav-links">
+                <a href="/register" class="btn btn-outline btn-sm">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content auth-container">
+        <div class="auth-card">
+            <h1 class="auth-title">Log in to your account</h1>
+            <p class="auth-subtitle">Welcome back! Please enter your credentials.</p>
+
+            {{#flash.error}}
+                <div class="alert alert-error" role="alert">{{.}}</div>
+            {{/flash.error}}
+            {{#flash.success}}
+                <div class="alert alert-success" role="alert">{{.}}</div>
+            {{/flash.success}}
+
+            <form action="/login" method="post" class="auth-form">
+                <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autofocus placeholder="Enter your username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account yet? <a href="/register">Register here</a></p>
+                <p><a href="/discussions/1">&larr; Back to Discussion</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Nested Forum Lab</p>
+        </div>
+    </footer>
+</body>
+</html>

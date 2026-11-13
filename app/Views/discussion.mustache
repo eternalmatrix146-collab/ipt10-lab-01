@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{site_title}}</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="/" class="site-logo">Nested Forum</a>
+            <nav class="nav-links">
+                {{#user_id}}
+                    <span class="user-greeting">Hi, <strong>{{username}}</strong></span>
+                    <form action="/logout" method="post" class="logout-form">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                    </form>
+                {{/user_id}}
+                {{^user_id}}
+                    <a href="/login" class="nav-link">Log in</a>
+                    <a href="/register" class="btn btn-primary btn-sm">Register</a>
+                {{/user_id}}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        {{#flash.error}}
+            <div class="alert alert-error" role="alert">{{.}}</div>
+        {{/flash.error}}
+        {{#flash.success}}
+            <div class="alert alert-success" role="alert">{{.}}</div>
+        {{/flash.success}}
+
+        <article class="discussion-card">
+            <header class="discussion-card-header">
+                <h1 class="discussion-title">{{discussion.title}}</h1>
+                <div class="discussion-meta">
+                    <img class="avatar" src="{{discussion.avatar}}" alt="{{discussion.author}}" width="32" height="32">
+                    <span>Started by <strong>{{discussion.author}}</strong> &middot; {{discussion.formatted_created_at}}</span>
+                </div>
+            </header>
+            <div class="discussion-body">
+                {{discussion.body}}
+            </div>
+        </article>
+
+        <section class="replies-section">
+            <h2 class="section-title">Replies</h2>
+            
+            <div class="comments-tree">
+                {{#has_any_comments}}
+                    {{#comments}}
+                        {{> comment}}
+                    {{/comments}}
+                {{/has_any_comments}}
+                {{^has_any_comments}}
+                    <p class="empty-state">No replies yet. Be the first to share your thoughts!</p>
+                {{/has_any_comments}}
+            </div>
+        </section>
+
+        <section class="post-reply-section">
+            {{#user_id}}
+            <div class="reply-box-card">
+                <h3>Post a top-level reply</h3>
+                <form action="/replies" method="post">
+                    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+                    <input type="hidden" name="discussion_id" value="{{discussion.id}}">
+                    <input type="hidden" name="parent_id" value="">
+                    <div class="form-group">
+                        <label for="top-reply-body" class="sr-only">Reply message</label>
+                        <textarea id="top-reply-body" name="body" required placeholder="Write your top-level reply..." rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Reply</button>
+                </form>
+            </div>
+            {{/user_id}}
+            {{^user_id}}
+            <div class="login-nudge-card">
+                <p>Anyone may read discussions, but only logged-in members may post replies.</p>
+                <div class="nudge-actions">
+                    <a href="/login" class="btn btn-primary">Log in to Reply</a>
+                    <a href="/register" class="btn btn-secondary">Create an Account</a>
+                </div>
+            </div>
+            {{/user_id}}
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Nested Forum Lab &middot; Built with PHP, MySQL &amp; PDO</p>
+        </div>
+    </footer>
+
+    <script src="/js/forum.js"></script>
+</body>
+</html>

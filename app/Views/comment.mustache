@@ -1,0 +1,40 @@
+<div class="comment-item" id="comment-{{id}}" style="margin-left: calc({{indent}} * 1.5rem);">
+    <div class="comment-card">
+        <div class="comment-header">
+            <span class="depth-badge">depth {{depth}}</span>
+            <img class="avatar" src="{{avatar}}" alt="{{author}}" width="28" height="28">
+            <strong class="comment-author">{{author}}</strong>
+            <span class="comment-time">{{formatted_created_at}}</span>
+            {{#has_children}}
+            <button type="button" class="collapse-btn" aria-controls="children-{{id}}" aria-expanded="true" data-count="{{child_count}}">
+                Hide replies ({{child_count}})
+            </button>
+            {{/has_children}}
+        </div>
+        <div class="comment-body">{{body}}</div>
+        <div class="comment-actions">
+            {{#user_id}}
+            <button type="button" class="btn-reply-toggle" data-comment-id="{{id}}">Reply</button>
+            {{/user_id}}
+        </div>
+        {{#user_id}}
+        <form id="reply-form-{{id}}" action="/replies" method="post" class="inline-reply-form" style="display: none;">
+            <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+            <input type="hidden" name="discussion_id" value="{{discussion_id}}">
+            <input type="hidden" name="parent_id" value="{{id}}">
+            <textarea name="body" required placeholder="Write a reply to {{author}}..."></textarea>
+            <div class="reply-form-actions">
+                <button type="submit" class="btn btn-primary btn-sm">Post Reply</button>
+                <button type="button" class="btn btn-secondary btn-sm btn-cancel-reply" data-comment-id="{{id}}">Cancel</button>
+            </div>
+        </form>
+        {{/user_id}}
+    </div>
+    {{#has_children}}
+    <div id="children-{{id}}" class="children-container">
+        {{#replies}}
+            {{> comment}}
+        {{/replies}}
+    </div>
+    {{/has_children}}
+</div>
