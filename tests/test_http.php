@@ -74,4 +74,42 @@ $resJs = httpGet($baseUrl . '/js/forum.js');
 echo "8. GET /js/forum.js -> Status: {$resJs['status']} (Expected 200)\n";
 assert($resJs['status'] === 200);
 
+// 9. Full browser-style Login via POST
+$cookieJar = tempnam(sys_get_temp_dir(), 'forum_cookie_');
+
+// 9a. GET /login to extract CSRF token
+$ch = curl_init($baseUrl . '/login');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieJar);
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieJar);
+$loginPageHtml = curl_exec($ch);
+curl_close($ch);
+
+preg_match('/name="csrf_token" value="([^"]+)"/', $loginPageHtml, $matches);
+$csrfToken = $matches[1] ?? '';
+assert($csrfToken !== '', 'CSRF token must be present in login form');
+
+// 9b. POST /login with alice and password123
+$ch = curl_init($baseUrl . '/login');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+    'csrf_token' => $csrfToken,
+    'username' => 'alice',
+    'password' => 'password123',
+]));
+curl_setopt($ch, CURLOPT_COOKIEJAR, $cookieJar);
+curl_setopt($ch, CURLOPT_COOKIEFILE, $cookieJar);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+$afterLoginHtml = curl_exec($ch);
+$loginStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+curl_close($ch);
+@unlink($cookieJar);
+
+echo "9. POST /login (alice:password123) -> Status: {$loginStatus}\n";
+assert($loginStatus === 200);
+assert(str_contains($afterLoginHtml, 'alice'));
+assert(str_contains($afterLoginHtml, 'Logout'));
+echo "   Authenticated session verified: User 'alice' is logged in!\n";
+
 echo "\nAll HTTP tests passed successfully!\n";

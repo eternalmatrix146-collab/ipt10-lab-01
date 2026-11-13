@@ -5,11 +5,11 @@ USE nested_forum_lab;
 
 -- Users (password hashes are for 'password123' - fictional only, never commit real credentials)
 INSERT INTO users (username, email, password_hash, avatar) VALUES
-('alice', 'alice@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL),
-('ben', 'ben@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL),
-('cara', 'cara@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL),
-('dee', 'dee@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL),
-('eli', 'eli@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL);
+('alice', 'alice@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
+('ben', 'ben@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
+('cara', 'cara@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
+('dee', 'dee@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
+('eli', 'eli@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL);
 
 -- Discussion 1: How do I learn PHP?
 INSERT INTO discussions (user_id, title, body) VALUES
