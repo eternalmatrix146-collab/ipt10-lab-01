@@ -9,7 +9,9 @@ INSERT INTO users (username, email, password_hash, avatar) VALUES
 ('ben', 'ben@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
 ('cara', 'cara@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
 ('dee', 'dee@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
-('eli', 'eli@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL);
+('eli', 'eli@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
+('student', 'student@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL),
+('admin', 'admin@example.com', '$2y$10$qmSeY7Uiu7VzaeQkI8ur/Oz6WloUhpkE9yzby1H4mIjWncqsLlEAy', NULL);
 
 -- Discussion 1: How do I learn PHP?
 INSERT INTO discussions (user_id, title, body) VALUES
