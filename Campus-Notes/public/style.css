@@ -1,0 +1,222 @@
+/* Campus Notes — "notebook on a desk".
+   One signature element: notes are ruled paper with a red margin line.
+   Everything else stays quiet: navy ink on a cool grey desk.
+   No external fonts or inline styles (the CSP only allows files from this site). */
+
+:root {
+  --desk:      #e9edf2;   /* page background */
+  --paper:     #ffffff;   /* sheets and notes */
+  --ink:       #1f2d4a;   /* text, primary buttons (ballpoint navy) */
+  --ink-soft:  #56627a;   /* secondary text */
+  --rule:      #c7d6ea;   /* notebook ruled lines, borders */
+  --margin:    #d9534f;   /* notebook margin line, delete */
+  --highlight: #fff1a8;   /* highlighter for messages */
+
+  --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --sans:  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --line: 1.75rem;        /* one ruled line; note text sits on it */
+  --radius: 6px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--desk);
+  color: var(--ink);
+  font: 1rem/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.2; }
+h2 { font: 600 1.125rem/1.3 var(--sans); margin-bottom: 1rem; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+  padding: 1rem clamp(1rem, 4vw, 3rem);
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+.brand { font: 700 1.5rem/1 var(--serif); letter-spacing: -.01em; }
+.brand a { color: var(--ink); text-decoration: none; }
+.account {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  color: var(--ink-soft);
+  font-size: .9375rem;
+}
+.account form { margin: 0; }
+
+/* ---------- Messages: highlighted, like a marked line in a notebook ---------- */
+.flashes { max-width: 72rem; margin: 1.25rem auto 0; padding: 0 clamp(1rem, 4vw, 3rem); }
+.message {
+  display: inline-block;
+  margin: 0 0 .5rem;
+  padding: .25rem .5rem;
+  background: linear-gradient(transparent 15%, var(--highlight) 15%, var(--highlight) 90%, transparent 90%);
+  font-weight: 500;
+}
+
+/* ---------- Sheets (forms) ---------- */
+.sheet {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.stack { display: grid; gap: 1rem; }
+label {
+  display: grid;
+  gap: .375rem;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+input, textarea {
+  width: 100%;
+  font: 1rem/1.5 var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid #aebdd2;
+  border-radius: 4px;
+  padding: .5rem .625rem;
+}
+/* The body field is ruled like the notes it becomes. */
+textarea {
+  resize: vertical;
+  min-height: calc(var(--line) * 5 + 1rem);
+  font: 1.0625rem/var(--line) var(--serif);
+  padding: .5rem .625rem;
+  background-image: linear-gradient(to bottom, transparent calc(var(--line) - 1px), var(--rule) calc(var(--line) - 1px));
+  background-size: 100% var(--line);
+  background-origin: content-box;
+  background-clip: content-box;
+  background-attachment: local;
+}
+input:hover, textarea:hover { border-color: var(--ink-soft); }
+.hint { margin: -.25rem 0 0; font-size: .8125rem; color: var(--ink-soft); }
+
+/* ---------- Buttons ---------- */
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font: 600 .9375rem/1 var(--sans);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn-primary   { background: var(--ink); color: #fff; }
+.btn-primary:hover { background: #2c3e63; }
+.btn-secondary { background: var(--paper); color: var(--ink); border-color: #aebdd2; }
+.btn-secondary:hover { border-color: var(--ink); }
+.btn-quiet     { background: transparent; color: var(--ink); min-height: 2.25rem; padding: 0 .75rem; }
+.btn-quiet:hover { background: var(--desk); }
+.btn-danger    { background: transparent; color: #b52f2b; min-height: 2.25rem; padding: 0 .75rem; }
+.btn-danger:hover { background: #fbe9e8; }
+
+:focus-visible {
+  outline: 3px solid #4d7cc7;
+  outline-offset: 2px;
+}
+input:focus-visible, textarea:focus-visible { outline-offset: 0; border-color: #4d7cc7; }
+
+/* ---------- Signed-out page ---------- */
+.auth { display: grid; place-items: start center; padding: clamp(2rem, 8vh, 5rem) 1rem; }
+.auth-sheet { width: min(100%, 26rem); padding: 2rem; }
+.auth-sheet h2 { font: 700 1.5rem/1.25 var(--serif); margin-bottom: 1.25rem; }
+.auth-sheet .actions { margin-top: .25rem; }
+.auth-sheet .actions .btn { flex: 1; }
+
+/* ---------- Signed-in workspace ---------- */
+.workspace {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem clamp(1rem, 4vw, 3rem) 4rem;
+  display: grid;
+  grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+.composer { display: grid; gap: 1.25rem; position: sticky; top: 1.5rem; }
+.editing { border-color: var(--ink); box-shadow: inset 4px 0 0 var(--ink); }
+
+.notes h2 { display: flex; align-items: baseline; gap: .5rem; }
+.count {
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: .0625rem .5rem;
+}
+.empty { color: var(--ink-soft); }
+
+/* ---------- The signature: notes as ruled notebook paper ---------- */
+.note {
+  position: relative;
+  max-width: 44rem;
+  margin: 0 0 1.25rem;
+  padding: var(--line) 1.5rem 1rem 3.75rem;
+  background-color: var(--paper);
+  background-image: linear-gradient(to bottom, transparent calc(var(--line) - 1px), var(--rule) calc(var(--line) - 1px));
+  background-size: 100% var(--line);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 var(--rule), 0 2px 6px rgba(31, 45, 74, .08);
+}
+.note::before {               /* red margin line */
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.75rem;
+  border-left: 2px solid var(--margin);
+  opacity: .7;
+}
+.note h3 {
+  font: 700 1.25rem/var(--line) var(--serif);
+  margin: 0 0 0;
+  overflow-wrap: anywhere;
+}
+.note .body {
+  margin: 0;
+  font: 1.0625rem/var(--line) var(--serif);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.note-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: .25rem;
+  margin-top: .75rem;
+}
+.note-actions form { margin: 0; }
+.note.is-editing { box-shadow: 0 0 0 2px var(--ink); }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 760px) {
+  .workspace { grid-template-columns: 1fr; gap: 1.5rem; }
+  .composer { position: static; }
+  .note { padding-left: 2.75rem; }
+  .note::before { left: 2rem; }
+  .account { width: 100%; justify-content: space-between; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

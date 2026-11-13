@@ -1,0 +1,5 @@
+# Never commit credentials or dependencies
+.env
+*.env
+/vendor/
+*.log

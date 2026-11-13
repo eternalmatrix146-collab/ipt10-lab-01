@@ -1,0 +1,149 @@
+@startuml
+!define RECTANGLE class
+
+skinparam classAttributeIconSize 0
+skinparam defaultFontName "JetBrains Mono"
+skinparam class {
+    BackgroundColor White
+    BorderColor #2C3E50
+    ArrowColor #2C3E50
+}
+skinparam package {
+    BackgroundColor #F8F9FA
+    BorderColor #BDC3C7
+}
+skinparam stereotypeCBackgroundColor #E8F6EF
+skinparam stereotypeCBrownColor #27AE60
+
+package "Abstract Products (Contracts)" {
+    interface "Weapon" as Weapon {
+        + use(): string
+    }
+    interface "Armor" as Armor {
+        + equip(): string
+    }
+    interface "Ability" as Ability {
+        + activate(): string
+    }
+    interface "CharacterFactory" as CharacterFactory {
+        + createWeapon(): Weapon
+        + createArmor(): Armor
+        + createAbility(): Ability
+    }
+}
+
+package "Concrete Family: Warrior" {
+    class "Sword" as Sword {
+        + use(): string
+    }
+    class "PlateArmor" as PlateArmor {
+        + equip(): string
+    }
+    class "PowerStrike" as PowerStrike {
+        + activate(): string
+    }
+    class "WarriorFactory" as WarriorFactory {
+        + createWeapon(): Weapon
+        + createArmor(): Armor
+        + createAbility(): Ability
+    }
+}
+
+package "Concrete Family: Mage" {
+    class "MagicStaff" as MagicStaff {
+        + use(): string
+    }
+    class "WizardRobe" as WizardRobe {
+        + equip(): string
+    }
+    class "Fireball" as Fireball {
+        + activate(): string
+    }
+    class "MageFactory" as MageFactory {
+        + createWeapon(): Weapon
+        + createArmor(): Armor
+        + createAbility(): Ability
+    }
+}
+
+package "Concrete Family: Archer" {
+    class "Bow" as Bow {
+        + use(): string
+    }
+    class "LeatherArmor" as LeatherArmor {
+        + equip(): string
+    }
+    class "MultiShot" as MultiShot {
+        + activate(): string
+    }
+    class "ArcherFactory" as ArcherFactory {
+        + createWeapon(): Weapon
+        + createArmor(): Armor
+        + createAbility(): Ability
+    }
+}
+
+' Implementations
+Weapon <|.. Sword
+Weapon <|.. MagicStaff
+Weapon <|.. Bow
+
+Armor <|.. PlateArmor
+Armor <|.. WizardRobe
+Armor <|.. LeatherArmor
+
+Ability <|.. PowerStrike
+Ability <|.. Fireball
+Ability <|.. MultiShot
+
+CharacterFactory <|.. WarriorFactory
+CharacterFactory <|.. MageFactory
+CharacterFactory <|.. ArcherFactory
+
+' Factory creates products
+WarriorFactory --> Sword : creates
+WarriorFactory --> PlateArmor : creates
+WarriorFactory --> PowerStrike : creates
+
+MageFactory --> MagicStaff : creates
+MageFactory --> WizardRobe : creates
+MageFactory --> Fireball : creates
+
+ArcherFactory --> Bow : creates
+ArcherFactory --> LeatherArmor : creates
+ArcherFactory --> MultiShot : creates
+
+' Client usage
+class "Client" as Client {
+    + main()
+}
+Client --> CharacterFactory : uses
+Client ..> WarriorFactory : creates
+Client ..> MageFactory : creates
+Client ..> ArcherFactory : creates
+
+note bottom of CharacterFactory
+  Abstract Factory Interface
+  Declares creation methods for
+  each abstract product type
+end note
+
+note bottom of WarriorFactory
+  Concrete Factory #1
+  Creates compatible Warrior family:
+  Sword + PlateArmor + PowerStrike
+end note
+
+note bottom of MageFactory
+  Concrete Factory #2
+  Creates compatible Mage family:
+  MagicStaff + WizardRobe + Fireball
+end note
+
+note bottom of ArcherFactory
+  Concrete Factory #3
+  Creates compatible Archer family:
+  Bow + LeatherArmor + MultiShot
+end note
+
+@enduml

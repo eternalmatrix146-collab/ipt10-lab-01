@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Nested Forum Lab — Visualizing Nested Forum Replies
 **PHP, MySQL and PDO (MVC Architecture)**
 
@@ -216,3 +217,7 @@ Run HTTP route tests against the running server:
 ```bash
 php tests/test_http.php
 ```
+=======
+# ipt10-lab-01
+3rd year IT-IPT#10
+>>>>>>> 3a468a07df116c4f45b58526e49fc9b668302d3d
