@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{site_title}}</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-content">
+            <a href="/" class="site-logo">Nested Forum</a>
+            <nav class="nav-links">
+                {{#user_id}}
+                    <span class="user-greeting">Hi, <strong>{{username}}</strong></span>
+                    <form action="/logout" method="post" class="logout-form">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                    </form>
+                {{/user_id}}
+                {{^user_id}}
+                    <a href="/login" class="nav-link">Log in</a>
+                    <a href="/register" class="btn btn-primary btn-sm">Register</a>
+                {{/user_id}}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content auth-container">
+        <div class="auth-card error-card">
+            <div class="error-badge">{{status_code}}</div>
+            <h1 class="auth-title">Page Error</h1>
+            <p class="error-message">{{error_message}}</p>
+            <div class="auth-footer">
+                <a href="/discussions/1" class="btn btn-primary">&larr; Return to Discussion</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Nested Forum Lab</p>
+        </div>
+    </footer>
+</body>
+</html>

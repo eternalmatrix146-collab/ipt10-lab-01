@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{site_title}}</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.5; margin: 0; padding: 0; color: #1f2937; background: #f9fafb; }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .max-width { max-width: 800px; margin: 0 auto; padding: 1rem; }
+        header { background: #111827; color: #fff; padding: 1rem 0; }
+        header .max-width { display: flex; justify-content: space-between; align-items: center; }
+        header a { color: #93c5fd; }
+        header a.active { color: #fff; font-weight: 600; }
+        nav .gap { display: flex; gap: 1rem; }
+        main { padding: 1.5rem 0; min-height: 60vh; }
+        .flash { padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.95rem; }
+        .flash.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        .flash.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        form { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        form label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem; }
+        form input[type="text"], form input[type="email"], form input[type="password"], form textarea {
+            width: 100%; padding: 0.6rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 1rem; margin-bottom: 1rem;
+        }
+        form textarea { min-height: 100px; resize: vertical; }
+        form button, form input[type="submit"] { background: #2563eb; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 1rem; cursor: pointer; font-weight: 600; }
+        form button:hover { background: #1d4ed8; }
+        form button.secondary { background: #6b7280; margin-left: 0.5rem; }
+        form button.secondary:hover { background: #4b5563; }
+        .help { font-size: 0.85rem; color: #6b7280; margin-top: -0.6rem; margin-bottom: 1rem; }
+        .discussion-header { background: #fff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        .discussion-header h1 { margin: 0 0 0.5rem 0; font-size: 1.5rem; }
+        .discussion-meta { font-size: 0.9rem; color: #6b7280; margin-bottom: 1rem; }
+        .discussion-body { white-space: pre-wrap; font-size: 1.05rem; color: #374151; }
+        .comment { margin-bottom: 1rem; }
+        .comment-inner { position: relative; padding-left: calc(1rem * {{indent}}); }
+        .comment .depth { position: absolute; left: 0; top: 0.4rem; font-size: 0.75rem; font-weight: 700; color: #9ca3af; user-select: none; }
+        .comment-content { background: #fff; border-radius: 6px; padding: 0.75rem 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.06); border: 1px solid #e5e7eb; }
+        .comment-meta { font-size: 0.8rem; color: #6b7280; margin-bottom: 0.4rem; }
+        .comment-meta strong { color: #111827; }
+        .comment-body { white-space: pre-wrap; color: #374151; }
+        .collapse-btn { background: none; border: 1px solid #d1d5db; border-radius: 4px; padding: 0.15rem 0.5rem; font-size: 0.75rem; cursor: pointer; color: #374151; float: right; }
+        .collapse-btn:hover { background: #f3f4f6; }
+        .hidden { display: none; }
+        .reply-form { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+        .login-nudge { background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; text-align: center; }
+        .login-nudge a { text-decoration: underline; font-weight: 600; }
+        .back-link { margin-bottom: 1rem; display: inline-block; color: #6b7280; }
+        .back-link:hover { color: #111827; }
+        .csrf-field { display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="max-width">
+            <a href="/" class="active">Nested Forum</a>
+            <div class="gap">
+                {{#user_id}}
+                    <span>Hi, {{username}}</span>
+                    <form action="/logout" method="post" style="display:inline">
+                        <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+                        <button type="submit">Logout</button>
+                    </form>
+                {{/user_id}}
+                {{^user_id}}
+                    <a href="/register">Register</a>
+                    <a href="/login">Login</a>
+                {{/user_id}}
+            </div>
+        </div>
+    </header>
+
+    <div class="max-width">
+        {{#flash.error}}
+            <div class="flash error">{{.}}</div>
+        {{/flash.error}}
+        {{#flash.success}}
+            <div class="flash success">{{.}}</div>
+        {{/flash.success}}
+
+        {{{content}}}
+    </div>
+</body>
+</html>

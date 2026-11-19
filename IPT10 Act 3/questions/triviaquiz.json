@@ -1,0 +1,110 @@
+{
+    "questions": [
+        {
+            "question": "On what date is the Philippines Independence Day celebrated?",
+            "options": [
+                {
+                    "key": "A",
+                    "value": "December 25"
+                },
+                {
+                    "key": "B",
+                    "value": "November 1"
+                },
+                {
+                    "key": "C",
+                    "value": "May 4"
+                },
+                {
+                    "key": "D",
+                    "value": "June 12"
+                }
+            ]
+        },
+        {
+            "question": "In which year did the Bataan Death March take place?",
+            "options": [
+                {
+                    "key": "A",
+                    "value": "1890"
+                },
+                {
+                    "key": "B",
+                    "value": "1942"
+                },
+                {
+                    "key": "C",
+                    "value": "1950"
+                },
+                {
+                    "key": "D",
+                    "value": "1560"
+                }
+            ]
+        },
+        {
+            "question": "In which province is the Mayon Volcano located?",
+            "options": [
+                {
+                    "key": "A",
+                    "value": "Albay"
+                },
+                {
+                    "key": "B",
+                    "value": "Batanes"
+                },
+                {
+                    "key": "C",
+                    "value": "Cagayan"
+                },
+                {
+                    "key": "D",
+                    "value": "Davao"
+                }
+            ]
+        },
+        {
+            "question": "What pen name did Marcelo H del Pilar use in his writings?",
+            "options": [
+                {
+                    "key": "A",
+                    "value": "Laong Laan"
+                },
+                {
+                    "key": "B",
+                    "value": "Plaridel"
+                },
+                {
+                    "key": "C",
+                    "value": "Leon Guerero"
+                },
+                {
+                    "key": "D",
+                    "value": "Agila"
+                }
+            ]
+        },
+        {
+            "question": "Mt. Pinatubo is located in the province of Luzon at the intersection of the borders of the provinces of Zambales, Tarlac, and which other province?",
+            "options": [
+                {
+                    "key": "A",
+                    "value": "Bataan"
+                },
+                {
+                    "key": "B",
+                    "value": "Subic"
+                },
+                {
+                    "key": "C",
+                    "value": "Pampanga"
+                },
+                {
+                    "key": "D",
+                    "value": "Cavite"
+                }
+            ]
+        }
+    ],
+    "answers": ["D", "B", "A", "B", "C"]
+}
