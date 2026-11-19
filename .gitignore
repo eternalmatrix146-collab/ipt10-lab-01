@@ -1,23 +1,6 @@
-<<<<<<< HEAD
-# Secrets — never commit your API key
-.env
-
-# Runtime files
-storage/logs/*
-storage/cache/*
-!storage/logs/.gitkeep
-!storage/cache/.gitkeep
-
-# Editor / OS
-.vscode/
-.idea/
-Thumbs.db
-.DS_Store
-=======
 /vendor/
 .env
 .env.local
 *.log
 .DS_Store
 Thumbs.db
->>>>>>> 4cebc346a79479eeaffbfda9cc62c1eab63ab568

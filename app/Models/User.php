@@ -1,46 +1,8 @@
 <?php
-<<<<<<< HEAD
-
-=======
->>>>>>> 4cebc346a79479eeaffbfda9cc62c1eab63ab568
 declare(strict_types=1);
 
 namespace App\Models;
 
-<<<<<<< HEAD
-use Phantom\Database\Model;
-
-/**
- * @property int $id
- * @property string $name
- * @property string $email
- * @property string $password
- * @property string $role
- * @property string|null $codename
- */
-class User extends Model
-{
-    protected static string $table = 'users';
-
-    protected static array $fillable = ['name', 'email', 'password', 'role', 'codename'];
-
-    protected static array $hidden = ['password'];
-
-    public function isAdmin(): bool
-    {
-        return $this->role === 'admin';
-    }
-
-    public function displayName(): string
-    {
-        return $this->codename ?: explode(' ', (string) $this->name)[0];
-    }
-
-    /** @return Order[] */
-    public function orders(): array
-    {
-        return $this->hasMany(Order::class, 'user_id')->latest()->get();
-=======
 class User extends Database
 {
     public function findById(int $id): ?array
@@ -111,6 +73,5 @@ class User extends Database
             htmlspecialchars($initial, ENT_QUOTES, 'UTF-8')
         );
         return 'data:image/svg+xml;utf8,' . rawurlencode($svg);
->>>>>>> 4cebc346a79479eeaffbfda9cc62c1eab63ab568
     }
 }
