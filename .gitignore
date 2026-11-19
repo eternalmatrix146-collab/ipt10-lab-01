@@ -1,0 +1,14 @@
+# Secrets — never commit your API key
+.env
+
+# Runtime files
+storage/logs/*
+storage/cache/*
+!storage/logs/.gitkeep
+!storage/cache/.gitkeep
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
